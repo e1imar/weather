@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  background-color: black;
+  background-image: url(./wojak-stage-3.5-doomer.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 .App-logo {
