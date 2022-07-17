@@ -2,10 +2,10 @@ import $ from "jquery";
 import Snap from "snapsvg-cjs";
 import { Power0, Power1, Power2, Power4, Elastic, SlowMo, TweenMax } from "gsap";
 import { useEffect } from "react";
-// 📝 Fetch all DOM nodes in jQuery and Snap SVG
 
 export default function useAnimation () {
   useEffect(() => {
+    // 📝 Fetch all DOM nodes in jQuery and Snap SVG
     var currentWeather
     var container = $('.container');
     var card = $('#card');

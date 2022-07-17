@@ -1,11 +1,17 @@
 import './App.css';
 import React, { useEffect, useState } from "react";
-import Weather from './components/Weather'
+import WeatherContainer from './components/WeatherContainer'
 import Window from './components/animation/Window'
+import { createTheme, ThemeProvider } from '@mui/material';
+
+const theme = createTheme({
+  palette: {mode: 'dark'}
+})
 
 function App() {
   const [coords, setCoords] = useState()
   const [data, setData] = useState()
+  const [city, setCity] = useState()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -13,23 +19,30 @@ function App() {
     )
   }, [])
 
-  // useEffect(() => {
-  //   if (!coords) return
-  //   const fetchData = async () => await fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${coords[0]}&lon=${coords[1]}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
-  //     .then(res => res.json())
-  //     .then(res => setData(res))
-  //     .catch(err => {throw new Error(err)})
-  //   fetchData()
-  // }, [coords])
+  useEffect(() => {
+    if (!coords) return
+    fetch(`${process.env.REACT_APP_API_URL}current.json?key=${process.env.REACT_APP_API_KEY}&q=${coords}`)
+      .then(res => res.json())
+      .then(res => setData(res))
+      .catch(err => {throw new Error(err)})
+  }, [coords])
+  
+  useEffect(() => {
+    if (!city) return
+    fetch(`${process.env.REACT_APP_API_URL}current.json?key=${process.env.REACT_APP_API_KEY}&q=${city}`)
+      .then(res => res.json())
+      .then(res => setData(res))
+      .catch(err => {throw new Error(err)})
+  }, [city])
 
-  return (
+  return <ThemeProvider theme={theme}>
     <div className="App">
-      {/* <Weather/> */}
-      <Window/>
+      <WeatherContainer data={data} setCity={setCity}/>
+      {/* <Window/> */}
       {/* <div>no data</div> */}
       {/* {data ? <Weather data={data}/> : <div></div>} */}
     </div>
-  );
+  </ThemeProvider>
 }
 
 export default App;
