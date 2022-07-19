@@ -52,7 +52,7 @@ export default function Search({setCity}) {
   return (
     <Autocomplete
       freeSolo
-      sx={{ width: 1, input: {textAlign: "center"}, "& label": {right: 0, textAlign: "center"}}}
+      sx={{ width: 1, input: {textAlign: "center", textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}, "& label": {right: 0, textAlign: "center"}}}
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.name
       }
