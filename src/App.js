@@ -2,14 +2,15 @@ import './App.css';
 import React, { useEffect, useState } from "react";
 import WeatherContainer from './components/WeatherContainer'
 import Window from './components/animation/Window'
+import mock from './mockData.json'
 
 function App() {
   const [coords, setCoords] = useState()
-  const [data, setData] = useState()
+  const [data, setData] = useState(mock)
   const [city, setCity] = useState()
 
   const fetchWeather = loc => {
-    fetch(`${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}`)
+    fetch(`${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`)
       .then(res => res.json())
       .then(res => setData(res))
       .catch(err => {throw new Error(err)})
