@@ -26,9 +26,7 @@ export default function Day ({day, deg}) {
     condition,
     avgvis_km,
     totalprecip_mm,
-    daily_will_it_rain,
     daily_chance_of_rain,
-    daily_will_it_snow,
     daily_chance_of_snow
   } = dayInfo
 
@@ -41,20 +39,14 @@ export default function Day ({day, deg}) {
     if (daily_chance_of_rain < daily_chance_of_snow) return <Typography>
       <Snow {...svgSize}/> {daily_chance_of_snow}%
     </Typography>
-    if (dayInfo.avgtemp_c >= 0) return <Typography>
-      <Rain {...svgSize}/> {daily_chance_of_rain}%
-    </Typography>
-    else return <Typography>
-      <Snow {...svgSize}/> {daily_chance_of_snow}%
-    </Typography>
   })()
 
-  const shortInfo = <Grid container alignItems="center" justifyContent="space-evenly">
-    <Typography component='span'>{dayMonth}</Typography>
-    <Box component='img' src={condition.icon} alt={condition.text} sx={{width: 24, height: 24}}/>
-    <Typography component='span'>{dayInfo['avgtemp_' + deg]}&deg;</Typography>
-    <Typography variant='body2'>night {dayInfo['mintemp_' + deg]}&deg;</Typography>
-    {snowOrRain}
+  const shortInfo = <Grid container alignItems="center">
+    <Grid item xs textAlign='center'><Typography>{dayMonth}</Typography></Grid>
+    <Grid item xs textAlign='center'><Box component='img' src={condition.icon} alt={condition.text} sx={{width: 24, height: 24}}/></Grid>
+    <Grid item xs><Typography>{dayInfo['avgtemp_' + deg]}&deg;</Typography></Grid>
+    <Grid item xs><Typography variant='body2'>{dayInfo['mintemp_' + deg]}&deg; night</Typography></Grid>
+    <Grid item xs>{snowOrRain}</Grid>
   </Grid>
 
   const fullInfo = <Grid container alignItems="center" justifyContent="space-evenly">
@@ -73,13 +65,13 @@ export default function Day ({day, deg}) {
       <Typography><Sunset {...svgSize}/> {day.astro.sunset}</Typography>
     </Box>
     <Grid container  alignItems="center" justifyContent="space-evenly">
-      {daily_will_it_rain === 1 && <Typography>
+      {daily_chance_of_rain > 0 && <Typography>
         <Rain {...svgSize}/> {daily_chance_of_rain}%
       </Typography>}
-      {daily_will_it_snow === 1 && <Typography>
+      {daily_chance_of_snow > 0 && <Typography>
         <Snow {...svgSize}/> {daily_chance_of_snow}%
       </Typography>}
-      {(daily_will_it_rain === 1 || daily_will_it_snow === 1) && <Typography>
+      {totalprecip_mm > 0 && <Typography>
         <PrecipIcon width='15' height='15'/> {totalprecip_mm}mm
       </Typography>}
       <Typography><HumidityIcon {...svgSize}/> humidity {avghumidity}%</Typography>

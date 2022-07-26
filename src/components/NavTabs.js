@@ -16,7 +16,7 @@ export default function NavTabs() {
   return (
     <Tabs value={value} onChange={handleChange} aria-label="nav tabs" centered sx={{width: '100%', minHeight: 24}}>
       <Tab label="Current" value='/current' component={Link} to='current' sx={tabStyle}/>
-      <Tab label="Daily" value='/forecast' component={Link} to='daily' sx={tabStyle}/>
+      <Tab label="Daily" value='/daily' component={Link} to='daily' sx={tabStyle}/>
       <Tab label="Hourly" value='/hourly' component={Link} to='hourly' sx={tabStyle}/>
     </Tabs>
   );

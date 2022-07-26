@@ -14,10 +14,10 @@ export default function WeatherContainer ({data, setCity}) {
 return <ThemeProvider theme={theme}>
   <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
     <Stack
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      spacing={0}
+      // direction="column"
+      // justifyContent="center"
+      // alignItems="center"
+      // spacing={0}
       sx={{
         color: '#fff',
         width: 'calc(10rem + 40vw)',

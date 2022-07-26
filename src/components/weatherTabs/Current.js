@@ -6,7 +6,7 @@ import {ReactComponent as WindIcon} from '../../icons/windIcon.svg'
 
 export default function Current ({location, current, deg, changeDeg}) {
   if (!location) return <CircularProgress />
-  return <Grid container justifyContent="center"  sx={{my: 1}}>
+  return <Grid container justifyContent="center"  sx={{my: 1, textAlign: 'center'}}>
     <Grid item container direction='column' sm={4} justifyContent="center">
       <Typography variant='h5'>{location.name}</Typography>
       <Typography>{current.condition.text}</Typography>
@@ -16,7 +16,7 @@ export default function Current ({location, current, deg, changeDeg}) {
         <Typography sx={{fontSize: '2rem'}}>{current['temp_' + deg]}</Typography>
         <Button onClick={changeDeg} sx={{minWidth: 25}}>&deg;{deg}</Button>
       </Grid>
-      <Typography>feels like {current['feelslike_' + deg]}&deg;</Typography>
+      <Typography>feels like {current['feelslike_' + deg]}</Typography>
     </Grid>
     <Grid item container xs={6}  sm={4} alignItems='center' justifyContent="center" direction='column'>
       <Box>
