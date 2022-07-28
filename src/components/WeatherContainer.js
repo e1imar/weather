@@ -12,22 +12,22 @@ const theme = createTheme({
 
 export default function WeatherContainer ({data, setCity}) {
 return <ThemeProvider theme={theme}>
-  <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-    <Stack
-      // direction="column"
-      // justifyContent="center"
-      // alignItems="center"
-      // spacing={0}
-      sx={{
+  <Stack minHeight='100vh'>
+    <Stack sx={{m: 1, textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}}>
+      <Search setCity={setCity}/>
+      <NavTabs/>
+    </Stack>
+    <Box display="flex" justifyContent="center" alignItems="center" flexGrow={1}>
+      {/*make loading state */}
+      <Stack sx={{
         color: '#fff',
         width: 'calc(10rem + 40vw)',
         maxWidth: '100vw',
         textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'
       }}>
-      <Search setCity={setCity}/>
-      <NavTabs/>
-      <Routes data={data}/>
-    </Stack>
-  </Box>
+        <Routes data={data}/>
+      </Stack>
+    </Box>
+  </Stack>
 </ThemeProvider>
 }

@@ -4,6 +4,7 @@ import {ReactComponent as Snow} from '../../icons/snow.svg'
 import {ReactComponent as HumidityIcon} from '../../icons/humidity-svgrepo-com(2).svg'
 import {ReactComponent as WindIcon} from '../../icons/windIcon.svg'
 import {ReactComponent as Vision} from '../../icons/vis.svg'
+import {ReactComponent as Gauge} from '../../icons/gauge.svg'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import { Grid, Typography, Box } from '@mui/material';
@@ -17,6 +18,7 @@ export default function Hour ({data, deg}) {
     condition,
     vis_km,
     precip_mm,
+    pressure_mb,
     chance_of_rain,
     chance_of_snow,
     time
@@ -64,6 +66,7 @@ export default function Hour ({data, deg}) {
     </Grid>
     <Typography><WindIcon {...svgSize}/> {wind_kph}km/h</Typography>
     <Typography><Vision {...svgSize}/> {vis_km}km</Typography>
+    <Typography><Gauge fill='currentColor' width='16' height='16'/> {pressure_mb} mbar</Typography>
   </Grid>
   
   return <Box width='1'>

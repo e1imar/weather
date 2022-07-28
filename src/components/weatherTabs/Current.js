@@ -1,31 +1,41 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, Box } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
-import { Box } from "@mui/system";
 import {ReactComponent as HumidityIcon} from '../../icons/humidity-svgrepo-com(2).svg'
 import {ReactComponent as WindIcon} from '../../icons/windIcon.svg'
+import {ReactComponent as Gauge} from '../../icons/gauge.svg'
 
 export default function Current ({location, current, deg, changeDeg}) {
   if (!location) return <CircularProgress />
-  return <Grid container justifyContent="center"  sx={{my: 1, textAlign: 'center'}}>
-    <Grid item container direction='column' sm={4} justifyContent="center">
-      <Typography variant='h5'>{location.name}</Typography>
+  return <Grid container justifyContent="space-evenly" alignItems='center'  sx={{my: 1, textAlign: 'center'}}>
+    <Grid container item justifyContent="center" sm><Typography variant='h4'>{location.name}</Typography></Grid>
+    <Grid item container direction='column' xs alignItems='center'>
+      <Box component='img' src={current.condition.icon} alt={current.condition.text} sx={{width: 50, height: 50}}/>
       <Typography>{current.condition.text}</Typography>
     </Grid>
-    <Grid item container direction='column' xs={6} sm={4}>
+    <Grid item container direction='column' xs>
       <Grid container item alignItems="flex-start" justifyContent="center">
         <Typography sx={{fontSize: '2rem'}}>{current['temp_' + deg]}</Typography>
         <Button onClick={changeDeg} sx={{minWidth: 25}}>&deg;{deg}</Button>
       </Grid>
       <Typography>feels like {current['feelslike_' + deg]}</Typography>
     </Grid>
-    <Grid item container xs={6}  sm={4} alignItems='center' justifyContent="center" direction='column'>
-      <Box>
-        <WindIcon/> {current.wind_kph}km/h
-      </Box>
-      <Box>
-        <HumidityIcon width='16' height='16'/> humidity {current.humidity}%
-      </Box>
+    <Grid container justifyContent="space-evenly" sx={{my: 2}}>
+      <Grid item sm>
+        <Typography>
+          <WindIcon/> {current.wind_kph}km/h
+        </Typography>
+      </Grid>
+      <Grid item sm>
+        <Typography sx={{mx: 1}}>
+          <HumidityIcon width='16' height='16'/> humidity {current.humidity}%
+        </Typography>
+      </Grid>
+      <Grid item sm>
+        <Typography>
+          <Gauge fill='currentColor' width='16' height='16'/> {current.pressure_mb} mbar
+        </Typography>
+      </Grid>
     </Grid>
-    <Box>updated at {current.last_updated.split(' ')[1]}</Box>
+    <Typography sx={{position: 'fixed', bottom: 0, my: 2}}>updated at {current.last_updated.split(' ')[1]}</Typography>
   </Grid>
 }

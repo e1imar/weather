@@ -1,7 +1,5 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import Hour from './Hour'
-// import {Box} from '@mui/material';
-// import { Typography } from '@mui/material';
 
 export default function Hourly ({forecast, deg}) {
   if (!forecast) return <CircularProgress />
