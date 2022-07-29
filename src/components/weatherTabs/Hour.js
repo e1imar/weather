@@ -10,7 +10,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import { Grid, Typography, Box } from '@mui/material';
 import { useState } from 'react';
 
-
 export default function Hour ({data, deg}) {
   const {
     humidity,

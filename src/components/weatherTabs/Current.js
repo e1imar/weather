@@ -1,11 +1,9 @@
 import { Button, Grid, Typography, Box } from "@mui/material";
-import CircularProgress from '@mui/material/CircularProgress';
 import {ReactComponent as HumidityIcon} from '../../icons/humidity-svgrepo-com(2).svg'
 import {ReactComponent as WindIcon} from '../../icons/windIcon.svg'
 import {ReactComponent as Gauge} from '../../icons/gauge.svg'
 
 export default function Current ({location, current, deg, changeDeg}) {
-  if (!location) return <CircularProgress />
   return <Grid container justifyContent="space-evenly" alignItems='center'  sx={{my: 1, textAlign: 'center'}}>
     <Grid container item justifyContent="center" sm><Typography variant='h4'>{location.name}</Typography></Grid>
     <Grid item container direction='column' xs alignItems='center'>

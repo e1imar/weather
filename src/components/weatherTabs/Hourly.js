@@ -1,8 +1,6 @@
-import CircularProgress from '@mui/material/CircularProgress';
 import Hour from './Hour'
 
 export default function Hourly ({forecast, deg}) {
-  if (!forecast) return <CircularProgress />
 
   const currentDate = new Date()
   

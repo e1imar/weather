@@ -1,8 +1,6 @@
-import CircularProgress from '@mui/material/CircularProgress';
 import Day from './Day'
 
 export default function Daily ({forecast, deg}) {
-  if (!forecast) return <CircularProgress />
 
   const [today, ...rest] = forecast.forecastday
 

@@ -6,8 +6,9 @@ import { useState } from 'react'
 
 export default function Routes ({data}) {
   const [deg, setDeg] = useState('c')
+  const read = data.read()
   const changeDeg = () => setDeg(prev => prev === 'c' ? 'f' : 'c')
-  const combProps = {...data, deg, changeDeg}
+  const combProps = {...read, deg, changeDeg}
   
   return useRoutes([
     {path: '/', element: <Navigate to='/current' replace/>},

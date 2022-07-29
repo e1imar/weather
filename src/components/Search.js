@@ -69,7 +69,7 @@ export default function Search({setCity}) {
         let city
         if (typeof newValue === 'string') {city = newValue}
         if (newValue && typeof newValue === 'object') {city = `${newValue.lat},${newValue.lon}`}
-        setCity(city)
+        if (city) setCity(city)
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
@@ -77,7 +77,7 @@ export default function Search({setCity}) {
       renderInput={(params) => (
         <TextField {...params} label="Enter your location" fullWidth variant="standard" />
       )}
-      renderOption={(props, option) => <li {...props}>
+      renderOption={(props, option) => <li {...props} key={option.id}>
         <Typography variant="body2" color="text.secondary" sx={{flexGrow: 1, textAlign: "center"}}>
           {option.name} ({option.region})
         </Typography>

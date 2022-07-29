@@ -1,39 +1,25 @@
 import './App.css';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import WeatherContainer from './components/WeatherContainer'
 import Window from './components/animation/Window'
 import mock from './mockData.json'
+import fetchData from './fetchData';
 
 function App() {
-  const [coords, setCoords] = useState()
-  const [data, setData] = useState(mock)
-  const [city, setCity] = useState()
+  const [loc, setLoc] = useState('London')
 
-  const fetchWeather = loc => {
-    fetch(`${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`)
-      .then(res => res.json())
-      .then(res => setData(res))
-      .catch(err => {throw new Error(err)})
-  }
+  const data = useMemo(() => fetchData(
+    `${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`
+    ), [loc])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      position => setCoords([position.coords.latitude, position.coords.longitude])
+      position => setLoc([position.coords.latitude, position.coords.longitude])
     )
   }, [])
 
-  useEffect(() => {
-    if (!coords) return
-    fetchWeather(coords)
-  }, [coords])
-  
-  useEffect(() => {
-    if (!city) return
-    fetchWeather(city)
-  }, [city])
-
   return <div className="App">
-    <WeatherContainer data={data} setCity={setCity}/>
+    <WeatherContainer data={data} setCity={setLoc}/>
     {/* <Window/> */}
     {/* <div>no data</div> */}
     {/* {data ? <Weather data={data}/> : <div></div>} */}

@@ -1,10 +1,13 @@
-import React from "react";
+import React, {Suspense} from "react";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import NavTabs from './NavTabs'
 import Search from "./Search";
 import Routes from './Routes'
 import { createTheme, ThemeProvider } from '@mui/material';
+import ErrorBoundary from '../ErrorBoundary'
+import LinearProgress from '@mui/material/LinearProgress';
+import Alert from '@mui/material/Alert';
 
 const theme = createTheme({
   palette: {mode: 'dark'}
@@ -18,14 +21,17 @@ return <ThemeProvider theme={theme}>
       <NavTabs/>
     </Stack>
     <Box display="flex" justifyContent="center" alignItems="center" flexGrow={1}>
-      {/*make loading state */}
       <Stack sx={{
         color: '#fff',
         width: 'calc(10rem + 40vw)',
         maxWidth: '100vw',
         textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'
       }}>
-        <Routes data={data}/>
+        <ErrorBoundary fallback={<Alert severity="error">Can't get weather data</Alert>}>
+          <Suspense fallback={<LinearProgress/>}>
+            <Routes data={data}/>
+          </Suspense>
+        </ErrorBoundary>
       </Stack>
     </Box>
   </Stack>
