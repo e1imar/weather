@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, Suspense } from "react";
 import WeatherContainer from './components/WeatherContainer'
 import Window from './components/animation/Window'
 import mock from './mockData.json'
@@ -10,7 +10,7 @@ function App() {
 
   const data = useMemo(() => fetchData(
     `${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`
-    ), [loc])
+  ), [loc])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -19,10 +19,8 @@ function App() {
   }, [])
 
   return <div className="App">
-    <WeatherContainer data={data} setCity={setLoc}/>
     {/* <Window/> */}
-    {/* <div>no data</div> */}
-    {/* {data ? <Weather data={data}/> : <div></div>} */}
+    <WeatherContainer data={data} setCity={setLoc}/>
   </div>
 }
 
