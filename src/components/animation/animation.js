@@ -2,26 +2,14 @@ import $ from "jquery";
 import Snap from "snapsvg-cjs";
 import { Power0, Power1, Power2, Power4, Elastic, SlowMo, TweenMax } from "gsap";
 
-export default function useAnimation () {
-  // set weather types ☁️ 🌬 🌧 ⛈ ☀️
-  
-  var weather = [
-    { type: 'snow', name: 'Snow'}, 
-    { type: 'wind', name: 'Windy'}, 
-    { type: 'rain', name: 'Rain'}, 
-    { type: 'thunder', name: 'Storms'},
-    { type: 'sun', name: 'Sunny'}
-  ];
-  
+export default function animation () {
   // 📝 Fetch all DOM nodes in jQuery and Snap SVG
-  var currentWeather
+  var currentWeather = {}
   var container = $('.container');
   var card = $('#card');
   var innerSVG = Snap('#inner');
   var outerSVG = Snap('#outer');
   var backSVG = Snap('#back');
-  var summary = $('#summary');
-  var date = $('#date');
   var weatherContainer1 = Snap.select('#layer1');
   var weatherContainer2 = Snap.select('#layer2');
   var weatherContainer3 = Snap.select('#layer3');
@@ -96,17 +84,7 @@ export default function useAnimation () {
   
   function init()
   {
-    onResize();
-    
-    // 🖱 bind weather menu buttons
-    
-    for(var i = 0; i < weather.length; i++)
-    {
-      var w = weather[i];
-      var b = $('#button-' + w.type);
-      w.button = b;
-      b.bind('click', w, changeWeather);
-    }
+    onResize();    
     
     // ☁️ draw clouds
     
@@ -119,7 +97,7 @@ export default function useAnimation () {
     // ☀️ set initial weather
     
     TweenMax.set(sunburst.node, {opacity: 0})
-    changeWeather(weather[0]);
+    changeWeather({});
   }
   
   function onResize()
@@ -206,7 +184,7 @@ export default function useAnimation () {
     
     // ⛈ line length is made longer for stormy weather
     
-    var lineLength = currentWeather.type == 'thunder' ? 35 : 14;
+    var lineLength = currentWeather.type === 'thunder' ? 35 : 14;
     
     // Start the drop at a random point at the top but leaving 
     // a 20px margin 
@@ -217,7 +195,7 @@ export default function useAnimation () {
     
     var line = eval('innerRainHolder' + (3 - Math.floor(lineWidth))).path('M0,0 0,' + lineLength).attr({
       fill: 'none',
-      stroke: currentWeather.type == 'thunder' ? '#777' : '#0000ff',
+      stroke: currentWeather.type === 'thunder' ? '#777' : '#0000ff',
       strokeWidth: lineWidth
     });
     
@@ -266,11 +244,11 @@ export default function useAnimation () {
     // 💦 The splash is a single line added to the outer svg.
   
     // The splashLength is how long the animated line will be
-    var splashLength = type == 'thunder' ? 30 : 20;
+    var splashLength = type === 'thunder' ? 30 : 20;
     
     // splashBounce is the max height the line will curve up
     // before falling
-    var splashBounce = type == 'thunder' ? 120 : 100;
+    var splashBounce = type === 'thunder' ? 120 : 100;
     
     // this sets how far down the line can fall
     var splashDistance = 80;
@@ -278,7 +256,7 @@ export default function useAnimation () {
     // because the storm rain is longer we want the animation
     // to last slighly longer so the overall speed is roughly
     // the same for both
-    var speed = type == 'thunder' ? 0.7 : 0.5;
+    var speed = type === 'thunder' ? 0.7 : 0.5;
     
     // Set a random splash up amount based on the max splash bounce
     var splashUp = 0 - (Math.random() * splashBounce);
@@ -297,7 +275,7 @@ export default function useAnimation () {
     
     var splash = outerSplashHolder.path(points.join(' ')).attr({
           fill: "none",
-          stroke: type == 'thunder' ? '#777' : '#0000ff',
+          stroke: type === 'thunder' ? '#777' : '#0000ff',
           strokeWidth: 1
       });
     
@@ -454,8 +432,8 @@ export default function useAnimation () {
     }
     
     for(var i = 0; i < clouds.length; i++)
-    {		
-      if(currentWeather.type == 'sun')
+    {
+      if(currentWeather.type === 'sun')
       {
         if(clouds[i].offset > -(sizes.card.width * 1.5)) clouds[i].offset += settings.windSpeed / (i + 1);
         if(clouds[i].offset > sizes.card.width * 2.5) clouds[i].offset = -(sizes.card.width * 1.5);
@@ -474,26 +452,17 @@ export default function useAnimation () {
   
   function reset()
   {
-    for(var i = 0; i < weather.length; i++)
-    {
-      container.removeClass(weather[i].type);
-      weather[i].button.removeClass('active');
-    }
-  }
-  
-  function updateSummaryText()
-  {
-    summary.html(currentWeather.name);
-    TweenMax.fromTo(summary, 1.5, {x: 30}, {opacity: 1, x: 0, ease: Power4.easeOut});
+    container.removeClass(currentWeather.type)
+    container.removeClass('night')
   }
   
   function startLightningTimer()
   {
     if(lightningTimeout) clearTimeout(lightningTimeout);
-    if(currentWeather.type == 'thunder')
-    {
-      lightningTimeout = setTimeout(lightning, Math.random()*6000);
-    }	
+    switch(currentWeather.type) {
+      case 'thunder': case 'patchy light rain width thunder': case 'patchy light snow width thunder': case 'snow with thunder':
+        lightningTimeout = setTimeout(lightning, Math.random()*6000); break;
+    }
   }
   
   function lightning()
@@ -524,25 +493,75 @@ export default function useAnimation () {
   
   function changeWeather(weather)
   {
-    if(weather.data) weather = weather.data;
+    // if(weather.data) weather = weather.data;
+
+    switch(weather.cond) {
+      case 1000:
+        weather.type = 'sun'; break
+      case 1003: case 1063: case 1066: case 1069: case 1087: case 1072:
+        weather.type = 'partly cloudy'; break
+      case 1114:
+        weather.type = 'blowing snow'; break
+      case 1117:
+        weather.type = 'blizzard'; break
+      case 1150: case 1180: case 1240:
+        weather.type = 'patchy light rain'; break
+      case 1153: case 1183: case 1198:
+        weather.type = 'light rain'; break
+      case 1168: case 1189: case 1201:
+        weather.type = 'rain'; break
+      case 1186: case 1243:
+        weather.type = 'rain at times'; break
+      case 1192: case 1246:
+        weather.type = 'heavy rain at times'; break
+      case 1195: case 1171:
+        weather.type = 'heavy rain'; break
+      case 1204:
+        weather.type = 'light sleet'; break
+      case 1207:
+        weather.type = 'sleet'; break
+      case 1249:
+        weather.type = 'light sleet shower'; break
+      case 1252:
+        weather.type = 'sleet shower'; break
+      case 1210: case 1261: case 1255:
+        weather.type = 'patchy light snow'; break
+      case 1213: case 1237:
+        weather.type = 'light snow'; break
+      case 1216: case 1258:
+        weather.type = 'patchy snow'; break
+      case 1219:
+        weather.type = 'snow'; break
+      case 1222: case 1264:
+        weather.type = 'patchy heavy snow'; break
+      case 1225:
+        weather.type = 'heavy snow'; break
+      case 1276:
+        weather.type = 'thunder'; break
+      case 1273:
+        weather.type = 'patchy light rain width thunder'; break
+      case 1279:
+        weather.type = 'patchy light snow width thunder'; break
+      case 1282:
+        weather.type = 'snow with thunder'; break
+      default:
+        weather.type = 'cloudy'
+    }
+    
     reset();
+    container.addClass(weather.type);
+    !weather.is_day && container.addClass('night')
     
     currentWeather = weather;
-    
-    TweenMax.killTweensOf(summary);
-    TweenMax.to(summary, 1, {opacity: 0, x: -30, onComplete: updateSummaryText, ease: Power4.easeIn})
-    
-    container.addClass(weather.type);
-    // weather.button.addClass('active');
     
     // windSpeed
     
     switch(weather.type)
     {
-      case 'wind':
+      case 'wind': case 'blowing snow':
         TweenMax.to(settings, 3, {windSpeed: 3, ease: Power2.easeInOut});
         break;
-      case 'sun':
+      case 'sun': case 'blizzard':
         TweenMax.to(settings, 3, {windSpeed: 20, ease: Power2.easeInOut});
         break;
       default:
@@ -554,10 +573,18 @@ export default function useAnimation () {
     
     switch(weather.type)
     {
-      case 'rain':
+      case 'rain possible':
+      case 'patchy light rain':
+      case 'light rain':
+      case 'light sleet':
+      case 'light sleet shower':
+      case 'patchy light rain width thunder':
+        TweenMax.to(settings, 3, {rainCount: 4, ease: Power2.easeInOut});
+        break;
+      case 'rain': case 'rain at times': case 'sleet': case 'sleet shower':
         TweenMax.to(settings, 3, {rainCount: 10, ease: Power2.easeInOut});
         break;
-      case 'thunder':
+      case 'thunder': case 'heavy rain at times': case 'heavy rain':
         TweenMax.to(settings, 3, {rainCount: 60, ease: Power2.easeInOut});
         break;
       default:
@@ -581,8 +608,17 @@ export default function useAnimation () {
     
     switch(weather.type)
     {
-      case 'snow':
+      case 'light sleet': case 'light sleet shower': case 'light snow': case 'patchy light snow': case 'patchy light snow width thunder':
+        TweenMax.to(settings, 3, {snowCount: 4, ease: Power2.easeInOut});
+        break;
+      case 'snow': case 'blowing snow': case 'sleet': case 'sleet shower': case 'patchy snow': case 'snow with thunder':
         TweenMax.to(settings, 3, {snowCount: 40, ease: Power2.easeInOut});
+        break;
+      case 'patchy heavy snow': case 'heavy snow':
+        TweenMax.to(settings, 3, {snowCount: 80, ease: Power2.easeInOut});
+        break;
+      case 'blizzard':
+        TweenMax.to(settings, 3, {snowCount: 120, ease: Power2.easeInOut});
         break;
       default:
         TweenMax.to(settings, 1, {snowCount: 0, ease: Power2.easeOut});
@@ -594,8 +630,24 @@ export default function useAnimation () {
     switch(weather.type)
     {
       case 'sun':
-        TweenMax.to(sun.node, 4, {x: sizes.card.width / 2, y: sizes.card.height / 2, ease: Power2.easeInOut});
-        TweenMax.to(sunburst.node, 4, {scale: 1, opacity: 0.8, y: (sizes.card.height/2) + (sizes.card.offset.top), ease: Power2.easeInOut});
+      case 'partly cloudy':
+      case 'patchy light rain':
+      case 'rain possible':
+      case 'rain at times':
+      case 'heavy rain at times':
+      case 'light sleet shower':
+      case 'sleet shower':
+      case 'patchy light snow':
+      case 'patchy snow':
+      case 'patchy heavy snow':
+      case 'patchy light rain width thunder':
+      case 'patchy light snow width thunder':
+        if (weather.is_day) {
+          TweenMax.to(sun.node, 4, {x: sizes.card.width / 2, y: sizes.card.height / 2, ease: Power2.easeInOut});
+          TweenMax.to(sunburst.node, 4, {scale: 1, opacity: 0.8, y: (sizes.card.height/2) + (sizes.card.offset.top), ease: Power2.easeInOut});
+        } else {
+          TweenMax.to(sunburst.node, 2, {scale: 0.4, opacity: 0, y: (sizes.container.height/2)-50, ease: Power2.easeInOut});
+        }
         break;
       default:
         TweenMax.to(sun.node, 2, {x: sizes.card.width / 2, y: -100, leafCount: 0, ease: Power2.easeInOut});
@@ -608,5 +660,11 @@ export default function useAnimation () {
     startLightningTimer();
   }
 
-  return changeWeather
+  const eventHandler = () => ({detail}) => {
+    const {cond, is_day} = detail
+    changeWeather({cond, is_day})
+  }
+
+  document.addEventListener('changeWeather', eventHandler())
+  return () => document.removeEventListener('changeWeather', eventHandler())
 }

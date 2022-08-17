@@ -4,8 +4,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { Box } from '@mui/material';
 
-export default function Hourly ({forecast, deg}) {
-  const currentDate = new Date()
+export default function Hourly ({forecast, deg, location}) {
+  const currentDate = new Date(location.localtime)
 
   const [firstD, secD, thirdD] = forecast.forecastday
   const days = [firstD.hour.filter(hour => currentDate < new Date(hour.time)), secD.hour, thirdD.hour]

@@ -1,21 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import animation from './animation'
 import './animationStyle.scss'
-import animation from './animation';
 
 export default function Window () {
-  // const weather = [
-  //   { type: 'snow', name: 'Snow'}, 
-  //   { type: 'wind', name: 'Windy'}, 
-  //   { type: 'rain', name: 'Rain'}, 
-  //   { type: 'thunder', name: 'Storms'},
-  //   { type: 'sun', name: 'Sunny'}
-  // ];
-
-	// let animate
-	// useEffect(() => {
-	// 	animate = animation()
-	// 	// animate(weather[3])
-	// }, [])
+  useEffect(() => {
+		return animation()
+  }, [])
 
   return <div className="background">
 		<div className="container">
@@ -39,15 +29,6 @@ export default function Window () {
 			c32.7-19,68.1-32,105.2-38.6L-8-46.1C-13-45.2-17.8-43.4-22.2-40.8z M22-40.9c-4.4-2.6-9.2-4.3-14.2-5.1l47.1-273.6
 			c37.2,6.4,72.7,19.2,105.4,38L22-40.9z"/>
 			</svg>
-			{/* <nav>
-				<ul>
-					<li><button id="button-snow" className="active"><i className="wi wi-snow"></i></button></li>
-					<li><button id="button-wind"><i className="wi wi-strong-wind"></i></button></li>
-					<li><button id="button-rain"><i className="wi wi-rain"></i></button></li>
-					<li><button id="button-thunder"><i className="wi wi-lightning"></i></button></li>
-					<li><button id="button-sun"><i className="wi wi-day-sunny"></i></button></li>
-				</ul>
-			</nav> */}
 			<div id="card" className="weather">
 				<svg id="inner">
 					<defs>
@@ -63,14 +44,6 @@ export default function Window () {
 					<g id="layer1"></g>
 					<g id="cloud1" className="cloud"></g>
 				</svg>
-				{/* <div className="details">
-					<div className="temp">20<span>c</span></div>
-					<div className="right">
-						<div id="date">Monday 22 August</div>
-						<div id="summary"></div>
-					</div>
-					
-				</div> */}
 			</div>
 			<svg id="outer"></svg>
 		</div>

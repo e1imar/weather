@@ -1,4 +1,5 @@
-import React, {Suspense} from "react";
+import React, {Suspense, useMemo, useState, useEffect} from "react";
+import fetchData from '../fetchData';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import NavTabs from './NavTabs'
@@ -13,11 +14,23 @@ const theme = createTheme({
   palette: {mode: 'dark'}
 })
 
-export default function WeatherContainer ({data, setCity}) {
+export default function WeatherContainer () {
+const [loc, setLoc] = useState('London')
+
+const data = useMemo(() => fetchData(
+  `${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`
+), [loc])
+
+useEffect(() => {
+  navigator.geolocation.getCurrentPosition(
+    position => setLoc([position.coords.latitude, position.coords.longitude])
+  )
+}, [])
+
 return <ThemeProvider theme={theme}>
   <Stack minHeight='100vh'>
     <Stack sx={{m: 1, textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'}}>
-      <Search setCity={setCity}/>
+      <Search setCity={setLoc}/>
       <NavTabs/>
     </Stack>
     <Box display="flex" justifyContent="center" alignItems="center" flexGrow={1}>

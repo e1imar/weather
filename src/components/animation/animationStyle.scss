@@ -32,15 +32,15 @@ body
 
 .container
 {
-  //   display: flex;
-	// flex-direction: column;
-  //   align-items: center;
-  // 	justify-content: center;
-	// margin: 0;
-	// padding: 0;
-	// height: 100%;
-	// width: 100%;
-	// overflow: auto;
+    display: flex;
+	flex-direction: column;
+    align-items: center;
+  	justify-content: center;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
 	position: absolute;
 	// top: 0;
 	
@@ -58,37 +58,6 @@ body
 	// }
 }
 
-nav
-{
-	ul 
-	{
-		margin: 20px 20px 0 20px;
-    	list-style-type: none;
-    	padding: 0;
-		display: flex;
-		flex-direction: row;
-	}
-	
-	li a 
-	{
-		display: block;
-		width: 50px;
-		text-align: center;
-		color: #aaa;
-		cursor: pointer;
-		
-		&:hover
-		{
-			color: #444;
-		}
-		
-		&.active
-		{
-			color: #4444ff;
-		}
-	}
-}
-
 #card 
 {
     //background: #fff;
@@ -102,58 +71,6 @@ nav
 	border-radius: 5px;
 	//border: solid 0px #fff;
 	position: relative;
-	
-	.details
-	{
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		padding: 16px 20px;
-		color: #888;
-		
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		
-		transition: color $speed ease;
-		
-		.thunder &
-		{
-			color: #ddd;
-		}
-		
-		.right
-		{
-			text-align: right;
-		}
-		
-		#date
-		{
-			margin: 4px 0;
-		}
-		
-		#summary
-		{
-			font-weight: 600;
-			font-size: 22px;
-		}
-
-		.temp
-		{
-			font-size: 60px;
-			line-height: 60px;
-
-			span
-			{
-				font-size: 18px;
-				line-height: 30px;
-				vertical-align: top;
-				margin-left: 5px;
-			}
-			
-		}
-	}
 }
 
 .weather
@@ -175,12 +92,13 @@ nav
 	{
 		background-color: #ccccff;
 	}
+
+	.night & {background-color: #142850}
 	
 	#inner
 	{
 		background-color: rgba(255,255,255,1);
 		background: linear-gradient(to bottom, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
-		
 	}
 	
 	.cloud
@@ -192,7 +110,7 @@ nav
 	{
 		fill: #efefef;
 		
-		.thunder &
+		.thunder &, .night &
 		{
 			fill: #9FA4AD;
 		}
@@ -202,7 +120,7 @@ nav
 	{
 		fill: #E6E6E6;
 		
-		.thunder &
+		.thunder &, .night &
 		{
 			fill: #8B8E98;
 		}
@@ -212,7 +130,7 @@ nav
 	{
 		fill: #D5D5D5;
 		
-		.thunder &
+		.thunder &, .night &
 		{
 			fill: #7B7988;
 		}
@@ -226,7 +144,10 @@ nav
 
 }
 
-.sun {fill: #F7ED47}
+.sun, #sun {
+	fill: #F7ED47;
+	.night & {fill: #F6F1D5}
+}
 #sunburst {fill:url(#SVGID_1_);}
 .stop1 {stop-color:#FFDE17;stop-opacity:0.7}
 .stop2 {stop-color:#FFF200;stop-opacity:0}
