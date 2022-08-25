@@ -102,13 +102,21 @@ export default function animation () {
   
   function onResize()
   {
+    // scale container
+    var contWidth = $('.background').width()*.432
+    var proportion = contWidth/500;
+
+    container.css({
+      transform: 'scale(' + proportion + ')'
+    });
+
     // 📏 grab window and card sizes 
-    
+
     sizes.container.width = container.width();
     sizes.container.height = container.height();
     sizes.card.width = card.width();
     sizes.card.height = card.height();
-    sizes.card.offset = card.offset();
+    sizes.card.offset = card.position();
     
     // 📐 update svg sizes
     
@@ -459,6 +467,7 @@ export default function animation () {
   function startLightningTimer()
   {
     if(lightningTimeout) clearTimeout(lightningTimeout);
+
     switch(currentWeather.type) {
       case 'thunder': case 'patchy light rain width thunder': case 'patchy light snow width thunder': case 'snow with thunder':
         lightningTimeout = setTimeout(lightning, Math.random()*6000); break;
@@ -493,8 +502,6 @@ export default function animation () {
   
   function changeWeather(weather)
   {
-    // if(weather.data) weather = weather.data;
-
     switch(weather.cond) {
       case 1000:
         weather.type = 'sun'; break
@@ -642,8 +649,8 @@ export default function animation () {
       case 'patchy heavy snow':
       case 'patchy light rain width thunder':
       case 'patchy light snow width thunder':
+        TweenMax.to(sun.node, 4, {x: sizes.card.width / 2, y: sizes.card.height / 2, ease: Power2.easeInOut});
         if (weather.is_day) {
-          TweenMax.to(sun.node, 4, {x: sizes.card.width / 2, y: sizes.card.height / 2, ease: Power2.easeInOut});
           TweenMax.to(sunburst.node, 4, {scale: 1, opacity: 0.8, y: (sizes.card.height/2) + (sizes.card.offset.top), ease: Power2.easeInOut});
         } else {
           TweenMax.to(sunburst.node, 2, {scale: 0.4, opacity: 0, y: (sizes.container.height/2)-50, ease: Power2.easeInOut});

@@ -6,7 +6,7 @@ import Window from './components/animation/Window'
 function App() {
 
   return <div className="App">
-    {/* <Window/> */}
+    <Window/>
     <WeatherContainer/>
   </div>
 }

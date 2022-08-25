@@ -15,7 +15,7 @@ const theme = createTheme({
 })
 
 export default function WeatherContainer () {
-const [loc, setLoc] = useState('London')
+const [loc, setLoc] = useState('kzn')
 
 const data = useMemo(() => fetchData(
   `${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`
@@ -33,7 +33,7 @@ return <ThemeProvider theme={theme}>
       <Search setCity={setLoc}/>
       <NavTabs/>
     </Stack>
-    <Box display="flex" justifyContent="center" alignItems="center" flexGrow={1}>
+    <Box display="flex" justifyContent="center" alignItems="center" flexGrow={1} zIndex={1}>
       <Stack sx={{
         color: '#fff',
         width: 'calc(10rem + 40vw)',
