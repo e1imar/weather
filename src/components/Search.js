@@ -75,7 +75,7 @@ export default function Search({setCity}) {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Enter your location" fullWidth variant="standard" />
+        <TextField {...params} label="Enter your location" fullWidth variant="filled" />
       )}
       renderOption={(props, option) => <li {...props} key={option.id}>
         <Typography variant="body2" color="text.secondary" sx={{flexGrow: 1, textAlign: "center"}}>
