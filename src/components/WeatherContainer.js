@@ -18,7 +18,8 @@ export default function WeatherContainer () {
 const [loc, setLoc] = useState('kzn')
 
 const data = useMemo(() => fetchData(
-  `${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`
+  // `${process.env.REACT_APP_API_URL}forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${loc}&days=3&aqi=no&alerts=no`
+  `/.netlify/functions/weatherAPI?q=${loc}`
 ), [loc])
 
 useEffect(() => {

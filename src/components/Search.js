@@ -13,7 +13,10 @@ export default function Search({setCity}) {
   const getCities = React.useMemo(
     () =>
       throttle((city, callback) => {
-          fetch(`${process.env.REACT_APP_API_URL}search.json?key=${process.env.REACT_APP_API_KEY}&q=${city}`)
+          fetch(
+            // `${process.env.REACT_APP_API_URL}search.json?key=${process.env.REACT_APP_API_KEY}&q=${city}`
+            `/.netlify/functions/weatherAPI?q=${city}&search`
+            )
           .then(res => res.json())
           .then(callback)
       }, 200),
