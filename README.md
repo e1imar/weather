@@ -1,6 +1,6 @@
 # \[Weather app\]
 
-Web application wich uses weather API and switches animation depending on it.
+Web application which uses weather API and switches animation depending on it.
 Contains search bar to choose location (also uses browser geolocation api), current, daily and hourly weather info in each tab (supports routing).
 Responsive web design
 
