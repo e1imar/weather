@@ -13,4 +13,4 @@ Responsive web design
 - [Sass](https://sass-lang.com/) CSS extension language
 - [MUI](https://mui.com/) React UI tools
 
-To view a live example, **[click here](https://rad-bubblegum-35b619.netlify.app)**
+To view a live example, **[click here](https://weatha.netlify.app)**
