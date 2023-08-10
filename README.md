@@ -1,6 +1,6 @@
 # \[Weather app\]
 
-Front End application wich uses weather API and switches animation depending on it.
+Web application which uses weather API and switches animation depending on it.
 Contains search bar to choose location (also uses browser geolocation api), current, daily and hourly weather info in each tab (supports routing).
 Responsive web design
 
@@ -12,3 +12,5 @@ Responsive web design
 - [jQuery](https://jquery.com/) JavaScript library
 - [Sass](https://sass-lang.com/) CSS extension language
 - [MUI](https://mui.com/) React UI tools
+
+To view a live example, **[click here](https://weatha.netlify.app)**
